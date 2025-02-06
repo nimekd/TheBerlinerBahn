@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Departures for {{ station_name }}</title>
+    
+    <link rel="preload" href="/static/img/logo/tbb.png" as="image">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css" rel="stylesheet">
+    <link href="/static/style/styles.css" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/apple-ii-screen-typeface" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Favicon -->
+    <link rel="icon" href="/static/img/logo/tbbthumb.png" type="image/png">
+</head>
+<body class="text-yellow-500 overflow-x-hidden">
+
+    
+<!-- Header -->
+<header class="header bg-black text-white z-10 flex items-center justify-between px-4 py-2">
+    <img src="/static/img/logo/tbb.png" 
+     alt="TBB Logo" 
+     class="h-12 sm:h-14 md:h-18 ml-4">
+         
+    <div class="mr-4"> <!-- Consistent margin-right for all screen sizes -->
+        <a href="/" class="text-yellow-500 text-lg sm:text-lg md:text-lg hover:underline">
+            Station <i class="fas fa-search"></i>
+        </a>        
+    </div>
+</header>
+
+
+<div id="error-message" class="hidden fixed top-4 right-4 bg-red-500 text-white px-4 py-2 rounded shadow-lg"></div>
+
+    <!-- Station Name and Filters For Desktop -->
+    <section class="text-center hidden md:flex flex-col py-2 mt-2">
+    <h1 class="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-3xl">Departure Board</h1>
+    <p class="mt-2 text-lg sm:text-xl md:text-2xl lg:text-xl">{{ station_name }}</p>
+
+    <div class="text-black container mx-auto px-2 mt-4 flex justify-center space-x-8">
+        <button
+            id="fullscreenButton" 
+            class="border border-white bg-yellow-600 hover:bg-yellow-500 hover:text-black py-2 px-4 font-bold w-10 h-10 rounded-full relative duration-500 ease-in-out transform hover:scale-105 hover:shadow-lg">
+            <img src="/static/img/filterButtons/fullscreen.png" alt="Fullscreen" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-in-out transform scale-75 hover:scale-100 hover:opacity-100">
+        </button>
+
+        <button 
+            id="filterBusButton" 
+            data-filter="Bus" 
+            style="background-color: #a5027d;" 
+            class="filter-button border-2 border-transparent hover:border-green-500 hover:bg-yellow-500 hover:text-black py-2 px-4 font-bold w-10 h-10 rounded-full relative duration-500 ease-in-out transform hover:scale-105 hover:shadow-lg">
+            <img src="/static/img/filterButtons/bus1.png" alt="Image for bus" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-in-out transform hover:scale-125 hover:opacity-100 z-0">
+        </button>
+        
+        <button 
+            id="filterSbahnButton" 
+            data-filter="S" 
+            style="background-color: #008d4f;" 
+            class="filter-button border-2 border-transparent hover:border-green-500 hover:bg-yellow-500 hover:text-black py-2 px-4 font-bold w-10 h-10 rounded-full relative duration-500 ease-in-out transform hover:scale-105 hover:shadow-lg">
+            <img src="/static/img/filterButtons/s1.png" alt="Image for S-Bahn" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-in-out transform scale-75 hover:scale-100 hover:opacity-100 z-0">
+        </button>
+        
+        <button 
+            id="filterUbahnButton" 
+            data-filter="U" 
+            style="background-color: #0065ae;" 
+            class="filter-button border-2 border-transparent hover:border-green-500 hover:bg-yellow-500 hover:text-black py-2 px-4 font-bold w-10 h-10 rounded-full relative duration-500 ease-in-out transform hover:scale-105 hover:shadow-lg">
+            <img src="/static/img/filterButtons/u1.png" alt="Image for U-Bahn" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-in-out transform scale-75 hover:scale-100 hover:opacity-100 z-0">
+        </button>
+        
+        <button 
+            id="filterTramButton" 
+            data-filter="Tram" 
+            style="background-color: #db2020;" 
+            class="filter-button border-2 border-transparent hover:border-green-500 hover:bg-yellow-500 hover:text-black py-2 px-4 font-bold w-10 h-10 rounded-full relative duration-500 ease-in-out transform hover:scale-105 hover:shadow-lg">
+            <img src="/static/img/filterButtons/tram2.png" alt="Image for Tram" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-in-out transform hover:scale-125 mt-0.5 hover:opacity-100 z-0">
+        </button>
+        
+        <button 
+        id="filterDBButton" 
+        data-filter="ICE,IC,RB,RE,FEX" 
+        style="background-color: #db2020;" 
+        class="filter-button border-2 border-transparent hover:border-green-500 hover:bg-yellow-500 hover:text-black py-2 px-4 font-bold w-10 h-10 rounded-full relative duration-500 ease-in-out transform hover:scale-105 hover:shadow-lg">
+        <img src="/static/img/filterButtons/db1.png" alt="Image for DB" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-in-out transform hover:scale-125 hover:opacity-100 z-0">
+        </button>
+
+        <button 
+            id="filterFButton" 
+            data-filter="F" 
+            style="background-color: #0080BA;" 
+            class="filter-button border-2 border-transparent hover:border-green-500 hover:bg-yellow-500 hover:text-black py-2 px-4 font-bold w-10 h-10 rounded-full relative duration-500 ease-in-out transform hover:scale-105 hover:shadow-lg">
+            <img src="/static/img/filterButtons/f1.png" alt="Image for F" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-in-out transform scale-75 hover:scale-100 hover:opacity-100 z-0">
+        </button>
+    </div>
+</section>
+
+
+
+<div id="mobile-departure-cards" class="text-sm sm:text-base md:text-lg mb-1 container mx-auto px-4 block overflow-x-hidden md:hidden">
+    <!-- Heading -->
+    <h1 class="font-bold py-2 text-center text-lg">Departure Board</h1>
+    <p class="text-center text-lg">{{ station_name }}</p>
+
+    <!-- Filter Buttons -->
+    <div id="mobile-filter-buttons" class="text-black container px-2 py-2 mt-1 mb-4 flex justify-between space-x-2 flex-wrap">
+
+        <button id="mobile-filterBusButton" data-filter="Bus" style="background-color: #a5027d;" class="mobile-filter-button border-2 border-transparent py-2 px-2 w-10 h-10 rounded-full relative duration-500 ease-in-out transform">
+            <img src="/static/img/filterButtons/bus1.png" alt="Image for bus" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-in-out transform hover:scale-125 hover:opacity-100 z-0">
+        </button>
+    
+        <button id="mobile-filterSbahnButton" data-filter="S" style="background-color: #008d4f;" class="mobile-filter-button border-2 border-transparent   py-2 px-2 w-10 h-10 rounded-full relative duration-500 ease-in-out transform">
+            <img src="/static/img/filterButtons/s1.png" alt="Image for S-Bahn" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-in-out transform scale-75 hover:scale-100 hover:opacity-100 z-0">
+        </button>
+    
+        <button id="mobile-filterUbahnButton" data-filter="U" style="background-color: #0065ae;" class="mobile-filter-button border-2 border-transparent  py-2 px-2 w-10 h-10 rounded-full relative duration-500 ease-in-out transform">
+            <img src="/static/img/filterButtons/u1.png" alt="Image for U-Bahn" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-in-out transform scale-75 hover:scale-100 hover:opacity-100 z-0">
+        </button>
+    
+        <button id="mobile-filterTramButton" data-filter="Tram" style="background-color: #db2020;" class="mobile-filter-button border-2 border-transparent  py-2 px-2 w-10 h-10 rounded-full relative duration-500 ease-in-out transform">
+            <img src="/static/img/filterButtons/tram2.png" alt="Image for Tram" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-in-out transform hover:scale-125 hover:opacity-100 z-0">
+        </button>
+    
+        <button id="mobile-filterDBButton" data-filter="ICE,IC,RB,RE,FEX" style="background-color: #db2020;" class="mobile-filter-button border-2 border-transparent py-2 px-2 w-10 h-10 rounded-full relative duration-500 ease-in-out transform">
+            <img src="/static/img/filterButtons/db1.png" alt="Image for DB" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-in-out transform hover:scale-125 hover:opacity-100 z-0">
+        </button>
+    
+        <button id="mobile-filterFButton" data-filter="F" style="background-color: #0080BA;" class="mobile-filter-button border-2 border-transparent py-2 px-2 w-10 h-10 rounded-full relative duration-500 ease-in-out transform ">
+            <img src="/static/img/filterButtons/f1.png" alt="Image for F" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-in-out transform scale-75 hover:scale-100 hover:opacity-100 z-0">
+        </button>
+    </div>
+    
+<!-- Dynamic Departure Cards Section -->
+<div class="departure-cards-section mb-16">
+    {% for departure in departures %}
+    <div class="mobile-departure-card mb-4 p-4 bg-black bg-opacity-50 font-apple-ii rounded-lg shadow-md {% if departure.cancelled %}cancelled{% endif %}" data-type="{{ departure.product_type }}">
+        <div class="flex items-center justify-between w-full">
+            <!-- Left Section for Name and Direction -->
+            <div class="flex items-center space-x-2 truncate">
+                <span class="text-yellow-500 text-lg">
+                    {% if departure.name.startswith('T') %}
+                        {{ departure.name[1:] }}
+                    {% elif departure.name.startswith('B') %}
+                        {{ departure.name[1:] }}
+                    {% else %}
+                        {{ departure.name }}
+                    {% endif %}
+                </span>
+                <span class="text-white text-lg truncate">
+                    {{ departure.direction }}
+                </span>
+            </div>
+
+             <!-- Right Section for Time Left -->
+            <div class="text-yellow-500 {% if departure.cancelled or departure.time_left_str == 'Jetzt' %}text-sm{% else %}text-lg{% endif %} flex-shrink-0 ml-4 flex items-center">
+                <span>{{ departure.time_left_str }}</span>
+                {% if departure.real_time and departure.real_date and not departure.cancelled %}
+                <div class="rt-symbol-container ml-2">
+                    <img src="/static/img/rticon/haf_rt_stboard_grey.svg" alt="Real-time symbol" class="rt-symbol">
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Bottom Section for Platform and Time Information -->
+        <div class="mt-1 text-gray-400 text-xs flex justify-between">
+            <p class="mobile-departure-platform">
+                Gleis: {{ departure.platform }}
+            </p>
+            <p class="mobile-departure-time">
+                [ {{ departure.real_time[:5] if departure.real_time else departure.planned_time[:5] }} ]
+            </p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+</div>
+    
+
+
+<!-- Table -->
+
+<div class="container mx-auto mb-10 hidden md:block">
+    <div class="overflow-x-auto" id="departureTableContainer">
+        <div id="currentTime" class="hidden text-white text-center text-2xl mb-4"></div>
+        <table class="min-w-full table-auto text-white" id="departureTable" style="background-color: #404040">
+            <thead class="bg-black text-yellow-500">
+                <tr>
+                    <th class="py-2 px-4 text-center w-1/6 text-xs sm:text-sm md:text-base lg:text-lg">Abfahrt Um</th>
+                    <th class="py-2 px-4 text-right w-1/6 text-xs sm:text-sm md:text-base lg:text-lg">Linie</th>
+                    <th class="py-2 px-4 text-left w-1/3 text-xs sm:text-sm md:text-base lg:text-lg">Ziel</th>
+                    <th class="py-2 px-4 text-left w-1/6 text-xs sm:text-sm md:text-base lg:text-lg">Gleis Nr.</th>
+                    <th class="py-2 px-4 text-center w-1/6 text-xs sm:text-sm md:text-base lg:text-lg">Abfahrt In</th>
+                </tr>
+            </thead>
+            <tbody id="departure-table-body">
+                {% for departure in departures %}
+                <tr data-product-type="{{ departure.product_type }}" class="{% if departure.cancelled %}cancelled{% elif departure.time_left_str == 'Jetzt' %}font-bold text-white{% endif %}">
+                    <td class="py-2 px-4 text-center text-xs sm:text-sm md:text-base lg:text-lg">
+                        {{ departure.real_time[:5] if departure.real_time else departure.planned_time[:5] }}
+                    </td>
+                    <td class="py-2 px-4 text-right w-1/6 text-xs sm:text-sm md:text-base lg:text-lg">
+                        <div class="inline-block" style="padding-left: 4rem; text-align: right;">
+                            {% set icon_color, icon_preview_class, displayed_name = '', '', departure.name %}
+                            {% set icon_dict = {
+                                'RB': '#f71a19', 
+                                'RE': '#f71a19', 
+                                'FEX': '#f71a19',
+                                'ICE': '#f71a19',
+                                'IC': '#f71a19',
+                                'EC': '#f71a19',
+                                'EN': '#f71a19',
+                                'B': '#A6017D',
+                                'T': '#de3a3a',
+                                'FLX': '#73D700',
+                                'S1': '#DB6BA3',
+                                'S2': '#007830', 
+                                'S25': '#007830', 
+                                'S26': '#007830', 
+                                'S3': '#0066AE',
+                                'S41': '#AE5834', 
+                                'S42': '#CC6410',
+                                'S45': '#CF9D52',
+                                'S46': '#CF9D52',
+                                'S47': '#CF9D52',
+                                'S5': '#EB7401',
+                                'S7': '#826DA7',
+                                'S75': '#826DA7',
+                                'S8': '#65AC1C',
+                                'S85': '#65AC1C',
+                                'S9': '#9A2244',
+                                'U1': '#55a822',
+                                'U2': '#DB4018',
+                                'U3': '#0E693B',
+                                'U4': '#F0D81E',
+                                'U5': '#7E522C',
+                                'U6': '#8D6EAC',
+                                'U7': '#009CD6',
+                                'U8': '#1C4E87',
+                                'U9': '#F37C1D'
+                            } %}
+                            
+                            {% if departure.name.startswith('FEX') %}
+                                {% set icon_color = icon_dict['FEX'] %}
+                                {% set icon_preview_class = 're-rb-ice-ic-icon-preview' %}
+                            {% elif departure.name.startswith(('RB', 'RE')) %}
+                                {% set icon_color = icon_dict[departure.name[:2]] %}
+                                {% set icon_preview_class = 're-rb-ice-ic-icon-preview' %}
+                                {% elif departure.name.startswith(('ICE', 'IC')) %}
+                                {% set icon_color = icon_dict[departure.name[:2]] %}
+                                {% set icon_preview_class = 're-rb-ice-ic-icon-preview' %}
+                                {% set displayed_name = 'I' + departure.name.split(' ', 1)[1] %} <!-- Replace ICE/IC with I -->                            
+                            {% elif departure.name.startswith('B') %}
+                                {% set icon_color = icon_dict['B'] %}
+                                {% set displayed_name = departure.name[1:] %} <!-- Remove the first character 'B' -->
+                            {% elif departure.name.startswith('T') %}
+                                {% set icon_color = icon_dict['T'] %}
+                                {% set displayed_name = departure.name[1:] %} <!-- Remove the first character 'T' -->
+                            {% elif departure.name.startswith('FLX') %}
+                                {% set icon_color = icon_dict['FLX'] %}
+                                {% set displayed_name = departure.name[0:3] %} <!-- Keep 'FLX' -->
+                            {% elif departure.name.startswith(('S', 's')) %}
+                                {% set icon_color = icon_dict.get(departure.name, '#000000') %}
+                            {% elif departure.name.startswith(('U', 'u')) %}
+                                {% set icon_color = icon_dict.get(departure.name, '#000000') %}
+                            {% endif %}
+                            
+                            <div class="icon-preview {{ icon_preview_class }}" style="background-color: {{ icon_color }};">
+                                <span>{{ displayed_name }}</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="py-2 px-4 text-left text-xs sm:text-sm md:text-base lg:text-lg">
+                        {{ departure.direction }}
+                    </td>
+                    <td class="py-2 px-4 text-left text-xs sm:text-sm md:text-base lg:text-lg">
+                        {{ departure.platform }}
+                    </td>
+                    <td class="py-2 px-4 text-center text-xs sm:text-sm md:text-base lg:text-lg">
+                        <div class="flex items-center justify-center">
+                            <span>{{ departure.time_left_str }}</span>
+                            <div class="ml-1 flex items-center relative" style="width: 24px; height: 24px;">
+                                {% if departure.real_time and departure.real_date and not departure.cancelled %}
+                                <img src="/static/img/rticon/haf_rt_stboard_grey.svg" alt="Real-time symbol" class="rt-symbol" data-tooltip="Real-time Data">
+                                {% endif %}
+                            </div>
+                        </div>
+                    </td>      
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>  
+    </div>
+</div>
+
+    <!-- Footer -->
+    <footer class="bg-black text-yellow-500 text-center p-4 fixed bottom-0 left-0 right-0 z-10">
+        <p>Developed By <a href="https://de.linkedin.com/in/kevilkathiriya" target="_blank" class="text-yellow-300 hover:underline">Kevil</a></p>
+    </footer>
+
+    
+    <script>const stationId = "{{ station_id }}";
+      // Pass station_id to JavaScript</script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/static/js/script.js"></script>
+</body>
+</html>

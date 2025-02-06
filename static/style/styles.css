@@ -1,0 +1,196 @@
+@import url('https://fonts.cdnfonts.com/css/apple-ii-screen-typeface');
+
+body {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: rgba(0, 0, 0, 0.75); /* Dark semi-transparent background */
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    overflow-y: scroll; /* Allow vertical scroll if needed */
+}
+
+.cancelled {
+    color: inherit; /* Keep the original text color */
+    text-decoration: line-through; /* Strike-through text for cancelled departures */
+    text-decoration-color: #ff0000; /* Red color for the line-through */
+}
+
+.cancelled-text {
+    font-weight: bold;
+    text-decoration: line-through;
+}
+
+.notes-container {
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.notes {
+    display: inline-block;
+    padding-left: 100%;
+    animation: scroll-left 10s linear infinite;
+}
+
+.note-item {
+    display: inline-block;
+    padding: 0 1rem;
+    white-space: nowrap;
+}
+
+@keyframes scroll-left {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+.header-fixed-height {
+    height: 70px;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+@media (max-width: 444px) {
+    .word-wrap {
+        word-wrap: break-word; /* Allows long words to break onto the next line */
+        overflow-wrap: break-word; /* Ensures that words break onto the next line */
+    }
+}
+
+.font-apple-ii {
+    font-family: 'Apple II Screen Typeface', sans-serif; /* Fallback to sans-serif */
+}
+
+/* Hide scrollbar for all devices */
+::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for WebKit browsers */
+}
+
+@supports (scrollbar-color: auto) {
+        scrollbar-width: none; /* Hide scrollbar for Firefox */
+}
+
+.icon-preview {
+    font-family: Arial, Helvetica, sans-serif;
+    height: 25px; /* Height of the rectangle */
+    border-radius: 30px; /* Rounded corners */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    min-width: 40px; /* Minimum width for the rectangle */
+    width: fit-content; /* Expands the width based on content */
+    padding: 0 0.5rem; /* Adds padding for space around the text */
+    white-space: nowrap; /* Prevents text from wrapping */
+}
+
+.re-rb-ice-ic-icon-preview {
+    font-family: sans-serif;
+    height: 25px; /* Height of the rectangle */
+    border-radius: 30px; /* Rounded corners */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    min-width: 45px; /* Minimum width for the rectangle */
+    width: fit-content; /* Expands the width based on content */
+    padding: 0 0.5rem; /* Adds padding for space around the text */
+    white-space: nowrap; /* Prevents text from wrapping */
+}
+.bus-icon-preview {
+    font-family: sans-serif;
+    height: 25px; /* Height of the rectangle */
+    border-radius: 30px; /* Rounded corners */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+    min-width: 40px; /* Minimum width for the rectangle */
+    width: fit-content; /* Expands the width based on content */
+    padding: 0 0.5rem; /* Adds padding for space around the text */
+    white-space: nowrap; /* Prevents text from wrapping */
+}
+#loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Dark semi-transparent background */
+    backdrop-filter: blur(5px); /* Blurring the background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure it appears above other content */
+}
+
+.loading-message {
+    color: white; /* Text color */
+    font-size: 1.5em; /* Text size */
+    padding: 20px; /* Some padding around the text */
+    border-radius: 5px; /* Rounded corners */
+    background-color: rgba(0, 0, 0, 0.7); /* Slightly darker background for the message box */
+}
+#departureTableContainer {
+    position: relative;
+    padding: 20px;
+}
+
+#currentTime {
+    font-size: 2rem; /* Increase the size for better visibility */
+    margin-bottom: 20px; /* Space between time and table */
+}
+
+/* Container for the real-time icon */
+.rt-symbol-container {
+    width: 18px; /* Adjust width as needed */
+    height: 18px; /* Adjust height as needed */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 1px; /* Adjust margin to bring the icon closer to the text */
+}
+
+/* Style for the SVG image */
+.rt-symbol {
+    width: 18px;  /* Adjust size as needed */
+    height: 18px; /* Adjust size as needed */
+    display: inline-block;
+    vertical-align: middle; /* Align with text */
+}
+
+button.active {
+    background-color: #28a745; /* For example, change color when active */
+}
+
+.error-message {
+    position: fixed;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    background-color: rgba(255, 0, 0, 0.8);
+    padding: 10px 20px;
+    color: white;
+    border-radius: 5px;
+    font-size: 14px;
+    animation: fade-in-out 2s ease-in-out;
+}
+
+@keyframes fade-in-out {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+}
+

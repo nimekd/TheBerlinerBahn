@@ -1,0 +1,350 @@
+/* Global Styles */
+body {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: rgba(0, 0, 0, 0.75); /* Dark semi-transparent background */
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+/* Header Height */
+.header-fixed-height {
+    height: 70px; /* Adjust to desired height for header */
+}
+
+/* Input Field Styles */
+.input-bg {
+    background-color: #434343; /* Background color same as body */
+    border: 1px solid #FFA500; /* Orange border color */
+    color: #FFA500; /* Text color */
+}
+
+/* Mobile Menu Styles */
+.menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
+    backdrop-filter: blur(15px); /* Glass effect */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Light border */
+    transform: translateX(100%); /* Initially hidden off-screen */
+    transition: transform 0.3s ease; /* Smooth transition for sliding effect */
+}
+
+.menu-open {
+    transform: translateX(0); /* Slide in from right */
+}
+
+/* Custom Scrollbar for Mobile Menu */
+.menu::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+}
+
+.menu::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 165, 0, 0.5); /* Color of the scrollbar thumb */
+}
+
+.menu::-webkit-scrollbar-track {
+    background-color: transparent; /* Color of the scrollbar track */
+}
+
+/* Top Stations Container */
+.top-staitons-container {
+    margin: 0 auto;
+    padding: 1rem;
+    text-align: center;
+    max-width: 800px;
+    background: rgba(0, 0, 0, 0.195); /* Dark background */
+    box-shadow: 0 4px 2px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    border-radius: 8px; /* Rounded corners */
+    overflow-y: auto; /* Vertical scroll if content exceeds height */
+    max-height: 70vh; /* Maximum height 70% of viewport height */
+}
+
+/* FAQ Container */
+.faq-container {
+    max-width: 800px; /* Maximum width for container */
+    width: 60%; /* Width up to max-width */
+    margin-bottom: 2.5rem; /* Equivalent to Tailwind's mt-10 */
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.195); /* Dark background */
+    box-shadow: 0 4px 2px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    border-radius: 8px; /* Rounded corners */
+    overflow-y: auto; /* Vertical scroll if content exceeds height */
+    max-height: 70vh; /* Maximum height 70% of viewport height */
+}
+
+/* FAQ Item */
+.faq-item {
+    margin-bottom: 1rem;
+    border-bottom: 3px solid #dcdcdc15; /* Divider line */
+    padding-bottom: 1rem;
+}
+
+/* About Us Container */
+.about-us-container {
+    max-width: 800px; /* Maximum width for container */
+    width: 60%; /* Width up to max-width */
+    margin: 0 auto;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.195); /* Dark background */
+    box-shadow: 0 4px 2px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    border-radius: 8px; /* Rounded corners */
+    overflow-y: auto; /* Vertical scroll if content exceeds height */
+    max-height: 70vh; /* Maximum height 70% of viewport height */
+}
+
+/* Modal Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent dark background */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease; /* Fade transition */
+    z-index: 100; /* Layer above other content */
+}
+
+/* Show overlay when modal is active */
+.modal-overlay:target {
+    opacity: 1;
+    visibility: visible;
+    animation: fadeIn 0.3s ease-out; /* Fade-in effect */
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8); /* Centered and scaled down */
+    background: rgba(255, 255, 255, 0.2); /* Semi-transparent background */
+    padding: 2rem;
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    max-width: 60%; /* Maximum width */
+    max-height: 60%; /* Maximum height */
+    overflow-y: scroll; /* Enable vertical scrolling */
+    z-index: 101; /* Layer above modal overlay */
+    backdrop-filter: blur(10px); /* Frosted glass effect */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Light border */
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Smooth transition */
+    opacity: 0; /* Initially hidden */
+}
+
+/* Hide Scrollbar for Webkit Browsers */
+.modal::-webkit-scrollbar {
+    display: none; /* Hide scrollbar */
+}
+
+/* Hide Scrollbar for Firefox */
+.modal {
+    scrollbar-width: none; /* Hide scrollbar */
+}
+
+/* Show modal with scale animation */
+.modal-overlay:target .modal {
+    transform: translate(-50%, -50%) scale(1); /* Scale up */
+    opacity: 1;
+    animation: zoomIn 0.3s ease-out; /* Zoom-in effect */
+}
+
+/* Close Button */
+.modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: #fff;
+    transition: color 0.3s ease; /* Color transition */
+}
+
+.modal-close:hover {
+    color: #FFD700; /* Color on hover */
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Zoom-in Animation */
+@keyframes zoomIn {
+    from {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    backdrop-filter: blur(10px); /* Frosted glass effect */
+}
+
+.dropdown-menu.hidden {
+    display: none; /* Hide menu */
+}
+
+/* Help Modal Overlay */
+.help-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.50); /* Semi-transparent background */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease; /* Smooth fade-in/out */
+    z-index: 10; /* Above regular content */
+}
+
+/* Show overlay when modal is active */
+.help-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Help Modal */
+.help-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8); /* Centered and scaled down */
+    background: rgba(255, 255, 255, 0.2); /* Semi-transparent background */
+    padding: 2rem;
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    max-width: 60%; /* Maximum width */
+    max-height: 60%; /* Maximum height */
+    z-index: 101; /* Layer above modal overlay */
+    backdrop-filter: blur(10px); /* Frosted glass effect */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Light border */
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Smooth transition */
+    opacity: 0; /* Initially hidden */
+}
+
+/* Show modal when overlay is active */
+.help-modal-overlay.active .help-modal {
+    transform: translate(-50%, -50%) scale(1); /* Scale up */
+    opacity: 1;
+}
+
+/* Close Button for Help Modal */
+.help-modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.2rem;
+    color: #ffffff;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    padding: 4px;
+    transition: color 0.3s ease;
+}
+
+.help-modal-close:hover {
+    color: #ffb222; /* Hover color */
+}
+
+/* Text inside Help Modal */
+.help-modal p {
+    text-align: center;
+    font-size: 1rem;
+    color: #ffffff;
+}
+
+/* Custom Help Modal Overlay */
+.custom-help-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.50); /* Semi-transparent background */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease; /* Smooth fade-in/out */
+    z-index: 10; /* Above regular content */
+}
+
+/* Show overlay when modal is active */
+.custom-help-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Custom Help Modal */
+.custom-help-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8); /* Centered and scaled down */
+    background: rgba(255, 255, 255, 0.2); /* Semi-transparent background */
+    padding: 2rem;
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    max-width: 60%; /* Maximum width */
+    max-height: 60%; /* Maximum height */
+    z-index: 101; /* Layer above modal overlay */
+    backdrop-filter: blur(10px); /* Frosted glass effect */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Light border */
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Smooth transition */
+    opacity: 0; /* Initially hidden */
+}
+
+/* Show modal when overlay is active */
+.custom-help-modal-overlay.active .custom-help-modal {
+    transform: translate(-50%, -50%) scale(1); /* Scale up */
+    opacity: 1;
+}
+
+/* Close Button for Custom Help Modal */
+.custom-help-modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.2rem;
+    color: #ffffff;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    padding: 4px;
+    transition: color 0.3s ease;
+}
+
+.custom-help-modal-close:hover {
+    color: #ffb222; /* Hover color */
+}
+
+/* Text inside Custom Help Modal */
+.custom-help-modal p {
+    text-align: center;
+    font-size: 1rem;
+    color: #ffffff;
+}
+
+/* Highlighted text style */
+.highlight {
+    color: #fec353; /* Change the color to highlight */
+    font-weight: bold; /* Make it bold */
+    background-color: #000; /* Optional: Add background color */
+    padding: 0 5px; /* Optional: Add some padding */
+    border-radius: 3px; /* Optional: Add rounded corners */
+}

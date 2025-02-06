@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="google-site-verification" content="BeBYwljLja5y6RGoSwVBZyh-MbuUMcC0ZjMm3dp2dGs" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Search for station information and view departure details.">
+    <title>The Berliner Bahn Station Search</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="/static/style/search_styles.css" rel="stylesheet">  
+    <link rel="preload" href="/static/img/logo/tbbthumb.png" as="image">
+    <link rel="icon" href="/static/img/logo/tbbthumb.png" type="image/png">
+
+</head>
+<body>
+    <!-- Desktop Layout -->
+    <header class="header bg-black text-white z-10 flex items-center justify-between px-4 py-2">
+        <div class="flex items-center">
+            <img src="/static/img/logo/tbb.png" alt="TBB Logo" class="h-12 sm:h-14 md:h-18 ml-4">
+        </div>
+        <nav class="flex space-x-8 mr-4">
+            <!-- Dropdown Button -->
+            <div class="relative">
+                <button id="topStationsButton" class="text-yellow-500 font-bold hover:underline flex items-center">
+                    <span>Top Stations</span>
+                    <svg class="ml-2 w-4 h-4 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <!-- Dropdown Menu -->
+                <div id="dropdownMenu" class="dropdown-menu absolute hidden mt-2 w-64 bg-white/40 text-yellow-500 rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 transition-transform duration-300 transform translate-y-[-10px] opacity-0 group-hover:opacity-100 group-hover:translate-y-0">
+                    <div class="p-4">
+                        <ul class="space-y-1">
+                            <li><a href="/departures/900003201" class="text-yellow-500 font-bold block px-4 py-2 transition-transform duration-300 transform hover:bg-white/20 hover:text-white hover:scale-105">S+U Berlin Hauptbahnhof</a></li>
+                            <li><a href="/departures/900230999" class="text-yellow-500 font-bold block px-4 py-2 transition-transform duration-300 transform hover:bg-white/20 hover:text-white hover:scale-105">S Potsdam Hauptbahnhof</a></li>
+                            <li><a href="/departures/900120005" class="text-yellow-500 font-bold block px-4 py-2 transition-transform duration-300 transform hover:bg-white/20 hover:text-white hover:scale-105">S Ostbahnhof (Berlin)</a></li>
+                            <li><a href="/departures/900058101" class="text-yellow-500 font-bold block px-4 py-2 transition-transform duration-300 transform hover:bg-white/20 hover:text-white hover:scale-105">S Südkreuz Bhf (Berlin)</a></li>
+                            <li><a href="/departures/900029101" class="text-yellow-500 font-bold block px-4 py-2 transition-transform duration-300 transform hover:bg-white/20 hover:text-white hover:scale-105">S Spandau Bhf (Berlin)</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <a href="#faq" class="text-yellow-500 font-bold hover:underline">FAQ</a>
+            <a href="#about" class="text-yellow-500 font-bold hover:underline">About Us</a>
+        </nav>
+    </header>
+
+    <!-- FAQ Modal Desktop -->
+<div id="faq" class="modal-overlay">
+    <div class="modal">
+        <a href="#" class="modal-close">×</a>
+        <div class="modal-content">
+            <h2 class="text-yellow-500 text-xl font-bold mb-4">Frequently Asked Questions</h2>
+            <div class="faq-item mb-6">
+                <button class="faq-question_d text-yellow-500 bg-black py-2 px-4 w-full text-left rounded-md focus:outline-none hover:bg-yellow-600 hover:text-white">
+                    Q1: How can I search for a station?
+                </button>
+                <p class="faq-answer_d hidden mt-2 text-yellow-500">Use the search bar on the main page to enter the name of the station and view results.</p>
+            </div>
+            <div class="faq-item mb-6">
+                <button class="faq-question_d text-yellow-500 bg-black py-2 px-4 w-full text-left rounded-md focus:outline-none hover:bg-yellow-600 hover:text-white">
+                    Q2: How do I view departure details?
+                </button>
+                <p class="faq-answer_d hidden mt-2 text-yellow-500">Click on the station name from the search results to see the departure details.</p>
+            </div>
+            <div class="faq-item mb-6">
+                <button class="faq-question_d text-yellow-500 bg-black py-2 px-4 w-full text-left rounded-md focus:outline-none hover:bg-yellow-600 hover:text-white">
+                    Q3: Where can I find more information about BerlinerBahn?
+                </button>
+                <p class="faq-answer_d hidden mt-2 text-yellow-500">Visit the About Us section in the menu for more information.</p>
+            </div>
+            <div class="faq-item mb-6">
+                <button class="faq-question_d text-yellow-500 bg-black py-2 px-4 w-full text-left rounded-md focus:outline-none hover:bg-yellow-600 hover:text-white">
+                    Q4: How do I use the search form?
+                </button>
+                <p class="faq-answer_d hidden mt-2 text-yellow-500">Enter the name of the station in the input field and specify the maximum number of results you want to see. Click the "Search" button to submit your query and view the results.</p>
+            </div>
+            <div class="faq-item mb-6">
+                <button class="faq-question_d text-yellow-500 bg-black py-2 px-4 w-full text-left rounded-md focus:outline-none hover:bg-yellow-600 hover:text-white">
+                    Q5: What will the search form provide?
+                </button>
+                <p class="faq-answer_d hidden mt-2 text-yellow-500">The search form will display a list of stations that match your query along with their departure details. The results will be based on the name of the station and the maximum number of results you specified.</p>
+            </div>
+            <div class="faq-item mb-6">
+                <button class="faq-question_d text-yellow-500 bg-black py-2 px-4 w-full text-left rounded-md focus:outline-none hover:bg-yellow-600 hover:text-white">
+                    Q6: What should I do if no results are found?
+                </button>
+                <p class="faq-answer_d hidden mt-2 text-yellow-500">If no results are found, ensure that you have entered the correct station name and try again. If the issue persists, the station might not be available in our database.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+    <!-- About Us Modal Desktop -->
+    <div id="about" class="modal-overlay">
+        <div class="modal">
+            <a href="#" class="modal-close animate-shake text-yellow-500 text-2xl hover:text-yellow-300">×</a>
+            <div class="modal-content">
+                <h2 class="text-yellow-500 ml-1 font-bold mb-3">About Us</h2>
+                <p class="text-yellow-500 bg-black py-2 px-4 w-full text-left rounded-md hover:bg-yellow-600 hover:text-white ">We are BerlinerBahn, providing comprehensive public transport information and services. Our goal is to make your travel experience as smooth as possible.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile/Tablet Header with Toggle Menu -->
+    <header class="lg:hidden fixed top-0 left-0 right-0 bg-black text-yellow-500 h-16 flex items-center justify-between px-4 z-10">
+        <div class="flex items-center">
+            <img src="/static/img/logo/tbb.webp" 
+     alt="TBB Logo" 
+     class="h-12 sm:h-14 md:h-18 ml-4 sm:ml-6 md:ml-4">
+        </div>
+        <button id="menu-toggle" class="text-yellow-500 font-bold hover:underline focus:outline-none">
+            <span>Menu</span>
+            <svg class="w-6 h-6 inline-block ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>
+        </button>
+    </header>
+
+    <!-- Mobile/Tablet Menu -->
+<div id="menu" class="menu fixed top-0 right-0 w-full h-full shadow-lg z-20 bg-white">
+    <div class="flex justify-end p-4">
+        <button id="close-menu" class="text-yellow-400 font-bold text-2xl">&times;</button>
+    </div>
+    <div class="flex flex-col items-center space-y-4">
+        <div class="flex flex-col items-center space-y-4">
+            <a href="#" id="menu-top-staitons" class="rounded text-yellow-500 font-bold hover:bg-yellow-500 hover:text-black px-4 py-2 block hover:rounded">Top Stations</a>
+            <a href="#" id="menu-faq" class="rounded text-yellow-500 font-bold hover:bg-yellow-500 hover:text-black px-4 py-2 block">FAQ</a>
+            <a href="#" id="menu-about-us" class="rounded text-yellow-500 font-bold hover:bg-yellow-500 hover:text-black px-4 py-2 block">About Us</a>
+        </div>
+
+        <div id="top-staitons-content" class="top-staitons-container  flex-col items-center w-60 space-y-4 p-4 overflow-y-auto hidden">
+            <div>
+                <ul class="space-y-1">
+                    <li><a href="/departures/900003201" class="text-yellow-500 font-bold block px-4 py-2 transition-transform duration-300 transform hover:bg-white/20 hover:text-white hover:scale-105">S+U Berlin Hauptbahnhof</a></li>
+                    <li><a href="/departures/900230999" class="text-yellow-500 font-bold block px-4 py-2 transition-transform duration-300 transform hover:bg-white/20 hover:text-white hover:scale-105">S Potsdam Hauptbahnhof</a></li>
+                    <li><a href="/departures/900120005" class="text-yellow-500 font-bold block px-4 py-2 transition-transform duration-300 transform hover:bg-white/20 hover:text-white hover:scale-105">S Ostbahnhof (Berlin)</a></li>
+                    <li><a href="/departures/900058101" class="text-yellow-500 font-bold block px-4 py-2 transition-transform duration-300 transform hover:bg-white/20 hover:text-white hover:scale-105">S Südkreuz Bhf (Berlin)</a></li>
+                    <li><a href="/departures/900029101" class="text-yellow-500 font-bold block px-4 py-2 transition-transform duration-300 transform hover:bg-white/20 hover:text-white hover:scale-105">S Spandau Bhf (Berlin)</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="faq-content" class="faq-container hidden flex-col items-center space-y-4 p-4 ">
+            <h2 class="text-yellow-500 text-lg font-bold mb-3">Frequently Asked Questions</h2>
+            <div class="text-sm">
+            <div class="faq-item w-full">
+                <button class="faq-question rounded text-left w-full bg-transparent hover:bg-black px-4 py-2 text-yellow-500 font-semibold">Q1: How can I search for a station?</button>
+                <p class="faq-answer hidden text-yellow-500 px-4 py-2">Use the search bar on the main page to enter the name of the station and view results.</p>
+            </div>
+            <div class="faq-item w-full">
+                <button class="faq-question rounded text-left w-full bg-transparent hover:bg-black px-4 py-2 text-yellow-500 font-semibold">Q2: How do I view departure details?</button>
+                <p class="faq-answer hidden text-yellow-500 px-4 py-2">Click on the station name from the search results to see the departure details.</p>
+            </div>
+            <div class="faq-item w-full">
+                <button class="faq-question rounded text-left  w-full bg-transparent hover:bg-black px-4 py-2 text-yellow-500 font-semibold">Q3: Where can I find more information about BerlinerBahn?</button>
+                <p class="faq-answer hidden text-yellow-500 px-4 py-2">Visit the About Us section in the menu for more information.</p>
+            </div>
+            <div class="faq-item w-full">
+                <button class="faq-question rounded text-left w-full bg-transparent hover:bg-black px-4 py-2 text-yellow-500 font-semibold">Q4: How do I use the search form?</button>
+                <p class="faq-answer hidden text-yellow-500 px-4 py-2">Enter the name of the station in the input field and specify the maximum number of results you want to see. Click the "Search" button to submit your query and view the results.</p>
+            </div>
+            <div class="faq-item w-full">
+                <button class="faq-question rounded text-left w-full bg-transparent hover:bg-black px-4 py-2 text-yellow-500 font-semibold">Q5: What will the search form provide?</button>
+                <p class="faq-answer hidden text-yellow-500 px-4 py-2">The search form will display a list of stations that match your query along with their departure details. The results will be based on the name of the station and the maximum number of results you specified.</p>
+            </div>
+            <div class="faq-item w-full">
+                <button class="faq-question rounded text-left w-full bg-transparent hover:bg-black px-4 py-2 text-yellow-500 font-semibold">Q6: What should I do if no results are found?</button>
+                <p class="faq-answer hidden text-yellow-500 px-4 py-2">If no results are found, ensure that you have entered the correct station name and try again. If the issue persists, the station might not be available in our database.</p>
+            </div>
+        </div> 
+        </div>       
+
+        <div id="about-us-content" class="about-us-container font-bold flex-col items-center space-y-4 max-h-[70vh] overflow-y-auto hidden">
+            <p class="text-yellow-500 px-4 py-2">We are BerlinerBahn, providing comprehensive public transport information and services. Our goal is to make your travel experience as smooth as possible.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Main content container for Desktop -->
+<div class="container mx-auto p-1 max-w-4xl mt-6 mb-20 hidden lg:block">
+    <main>
+        <!-- Form Container -->
+        <section class="p-6 mb-1">
+            <h1 class="text-yellow-500 text-4xl font-bold mb-6">Station Search</h1>
+            <form id="search-form" method="POST" action="/">
+                <div class="flex items-center mb-4 space-x-4 text-yellow-500">
+                    <div class="text-sm">
+                        <label for="station-name" class="block mb-2">Enter station name:</label>
+                        <input type="text" id="station-name" name="station_name" placeholder="Write name here" required minlength="1" class="input-bg text-sm h-8 w-64 px-2" aria-label="Station Name">
+                    </div>
+                    <div class="text-sm">
+                        <label for="max-results" class="block mb-2">Max results for station search:</label>
+                        <input type="number" id="max-results" name="max_results" value="5" min="1" class="input-bg text-sm h-8 w-64 px-2" aria-label="Max Results">
+                    </div>
+                    <button type="submit" id="search-btn" class="h-8 w-32 px-2 bg-yellow-500 text-black font-bold mt-7 hover:bg-yellow-600 hover:text-white hover:scale-105 hover:shadow-lg transition duration-300 ease-in-out relative" onclick="showLoading()">
+                        <span id="btn-text">Search</span>
+                        <div id="loading-spinner" class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden">
+                            <!-- Example Spinner (You can replace it with an animated gif or SVG) -->
+                            <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 0116 0H4z"></path>
+                            </svg>
+                        </div>
+                    </button>                    
+                    
+                    <button type="button" id="help-btn" class="h-8 w-24 px-2 bg-white text-black font-bold border border-yellow-500 mt-7 hover:bg-yellow-500 hover:text-white hover:border-yellow-600 hover:shadow-md transition duration-300 ease-in-out">Help?</button>
+                    <div id="help-popup" class="help-modal-overlay">
+                        <div class="help-modal">
+                            <button type="button" class="help-modal-close" id="close-popup">&times;</button>
+                            <p>Please refer to the FAQ section.</p>
+                        </div>
+                    </div>
+                       
+                </div>
+            </form>
+        </section>
+
+        <section class="flex flex-col items-center h-max mx-auto">
+            <div class="ml-60 max-w-lg w-full">
+                <h2 class="text-xl text-yellow-500 mb-3 font-bold">Searched stations:</h2>
+                <ul id="results-list" class="text-sm font-bold list-disc list-inside space-y-2 p-0" style="color: #B2B2B2;">
+                    {% if station_names %}
+                        {% for station_name in station_names %}
+                            <li>
+                                <a href="{{ url_for('show_departures', station_id=station_info_map[station_name]['extId']) }}" class="hover:underline">{{ station_name }}</a>
+                            </li>
+                        {% endfor %}
+                    {% elif error_message %}
+                        <li class="text-red-500">{{ error_message }}</li>
+                    {% else %}
+                        <li>
+                            <a href="{{ url_for('show_departures', station_id='900100003') }}" class="hover:underline">S+U Alexanderplatz (Berlin)</a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('show_departures', station_id='900029302') }}" class="hover:underline">S+U Rathaus Spandau (Berlin)</a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('show_departures', station_id='900120003') }}" class="hover:underline">S Ostkreuz (Berlin)</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </section>
+    </main>
+</div>
+
+<!-- Main content container for Mobile -->
+<div class="mobile-container mx-auto p-1 max-w-full mb-20 lg:hidden">
+    <main>
+        <!-- Form Container -->
+        <section class="mobile-form-container p-6 mb-1">
+            <h1 class="text-yellow-500 text-2xl font-bold mb-2">Station Search</h1>
+            <form id="mobile-search-form" method="POST">
+                <div class="flex flex-col items-stretch text-yellow-500">
+                    <div class="mb-6">
+                        <label for="station-name" class="block mb-2 text-base">Enter station name:</label>
+                        <input type="text" id="station-name" name="station_name" placeholder="Write name here" required minlength="1" class="input-bg text-sm h-8 w-full px-2" aria-label="Station Name">
+                    </div>
+                    <div class="mb-6">
+                        <label for="max-results" class="block mb-2 text-base">Max results for search:</label>
+                        <input type="number" id="max-results" name="max_results" value="5" min="1" class="input-bg text-sm h-8 w-full px-2" aria-label="Max Results">
+                    </div>
+                    <div class="flex flex-row space-x-2 w-full text-base">
+                        <button type="submit" id="mobile-search-btn" class="h-8 px-2 w-24 bg-yellow-500 text-black font-semibold hover:bg-yellow-600 hover:text-white hover:scale-105 hover:shadow-lg transition duration-300 ease-in-out relative">
+                            <!-- Button text -->
+                            <span id="mobile-btn-text">Search</span>
+                            
+                            <!-- Spinner -->
+                            <div id="mobile-loading-spinner" class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden">
+                                <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 0116 0H4z"></path>
+                                </svg>
+                            </div>
+                        </button>
+                        
+                        <button type="button" id="mobile-help-btn" class="h-8 px-2 w-24 bg-white text-black border border-yellow-500 font-semibold hover:bg-yellow-500 hover:text-white hover:border-yellow-600 hover:shadow-md transition duration-300 ease-in-out">Help?</button>
+                        <div id="mobile-help-popup" class="help-modal-overlay">
+                            <div class="help-modal">
+                                <button type="button" class="help-modal-close" id="mobile-close-popup">&times;</button>
+                                <p>Please refer to the FAQ section.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </section>
+
+        <!-- Results Container -->
+        <section class="mobile-results-container flex ml-6 mb-14 h-max mr-10">
+            <div class="text-left">
+                <h2 class="text-lg text-yellow-500 mb-3 font-bold">Searched stations:</h2>
+                <ul id="mobile-results-list" class="text-sm font-bold list-disc list-inside space-y-2 p-0" style="color: #B2B2B2;">
+                    {% if station_names %}
+                        {% for station_name in station_names %}
+                            <li>
+                                <a href="{{ url_for('show_departures', station_id=station_info_map[station_name]['extId']) }}" class="hover:underline">{{ station_name }}</a>
+                            </li>
+                        {% endfor %}
+                    {% elif error_message %}
+                    <li class="text-red-500">{{ error_message }}</li>
+                    {% else %}
+                        <li>
+                            <a href="{{ url_for('show_departures', station_id='900100003') }}" class="hover:underline">S+U Alexanderplatz (Berlin)</a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('show_departures', station_id='900120003') }}" class="hover:underline">S Ostkreuz (Berlin)</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </section>
+    </main>
+</div>
+
+
+    <!-- Footer -->
+<footer class="bg-black text-yellow-500 text-center p-4 fixed bottom-0 left-0 right-0 z-10">
+    <p>&copy; 2024 <span class="highlight">The Berliner Bahn</span>. All rights reserved.</p>
+</footer>
+
+    <script src="/static/js/search_script.js"> </script>
+    
+</body>
+</html>
