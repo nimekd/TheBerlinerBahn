@@ -112,8 +112,8 @@ Watch the screencast below to see how the app works:
 │   └── search.html
 ├── Procfile
 └── README.md
-
-## License  
+```
+### License  
 This project is licensed under the [MIT License](LICENSE).  
 
 ![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)
